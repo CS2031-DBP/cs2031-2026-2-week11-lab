@@ -1,0 +1,123 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+:root {
+  --bg: #f5f5f5;
+  --text: #1a1a1a;
+  --card-bg: #ffffff;
+  --border: #ddd;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --danger: #dc2626;
+}
+
+[data-theme="dark"] {
+  --bg: #1a1a2e;
+  --text: #e0e0e0;
+  --card-bg: #16213e;
+  --border: #444;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --danger: #ef4444;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-danger { background: var(--danger); color: white; }
+
+input, textarea {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+label { font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.25rem; }
+.form-group { margin-bottom: 0.75rem; }
+
+/* Page layout */
+.page { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.page-title { font-size: 1.5rem; font-weight: 700; }
+.page-body { display: grid; grid-template-columns: 280px 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+
+/* Theme toggle */
+.theme-toggle { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+.theme-toggle:hover { border-color: var(--primary); }
+
+/* Student list */
+.section-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
+.student-list { list-style: none; }
+.student-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 0.25rem;
+  border: 1px solid transparent;
+}
+.student-item:hover { background: var(--border); }
+.student-item.selected { background: var(--primary); color: white; border-color: var(--primary); }
+.student-item.selected .btn-delete { background: rgba(255,255,255,0.2); color: white; }
+.student-name { font-size: 0.875rem; }
+.btn-delete { background: transparent; color: var(--danger); padding: 0.2rem 0.5rem; font-size: 0.8rem; }
+.btn-delete:hover { background: var(--danger); color: white; }
+
+/* Empty / error */
+.empty { color: #888; font-size: 0.875rem; padding: 0.5rem 0; }
+.error { color: var(--danger); font-size: 0.875rem; margin-bottom: 0.5rem; }
+
+/* Student detail */
+.student-detail { padding: 0.5rem; }
+.detail-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+.detail-fields { margin-bottom: 1rem; }
+.detail-row { display: flex; gap: 0.5rem; margin-bottom: 0.4rem; font-size: 0.875rem; }
+.detail-label { font-weight: 600; min-width: 90px; }
+.courses-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.course-list { list-style: none; }
+.course-item { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+.course-credits { color: #888; font-size: 0.8rem; }
+
+/* Student form */
+.form-section { max-width: 480px; }
+.form-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+
+/* Student name button — styled as plain inline text */
+.student-name-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  flex: 1;
+  font-size: 0.875rem;
+}

@@ -8,7 +8,6 @@ export function useStudents() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
     getStudents()
       .then(data => {
         setStudents(data);

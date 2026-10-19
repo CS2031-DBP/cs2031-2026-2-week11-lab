@@ -3,6 +3,8 @@
 **Curso:** Desarrollo Basado en Plataformas (CS2031) — UTEC, Ciclo 2026-2  
 **Profesor:** Javier Olivares
 
+> ⚠️ **Rama `solution`:** esta rama contiene el lab completamente resuelto. Es material de referencia **solo para el staff del curso** (profesor/JPs), para tener la resolución a la mano en caso aplique. Los estudiantes trabajan sobre la rama `main`, donde los componentes están marcados con `// TODO`.
+
 ---
 
 ## Objetivo

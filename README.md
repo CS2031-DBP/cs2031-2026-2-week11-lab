@@ -23,32 +23,70 @@ Implementar el frontend en React + TypeScript de una aplicación CRUD de estudia
 |-----------|-------------|
 | Node.js `20.19+` o `22.12+` (requerido por Vite 8) | `node -v` |
 | npm 9 o superior | `npm -v` |
-| Backend del lab corriendo en `http://localhost:8080` | Ver [README del backend](../cs2031-2026-2-week11-backend/README.md) |
-
-Asegurate de que el backend este activo antes de iniciar el frontend; sin el, todas las peticiones fallaran.
+| JDK 26 (para levantar el backend) | `java -version` |
 
 ---
 
-## 2. Configuracion e instalacion
+## 2. Conectar el backend y el frontend
+
+Este lab usa **dos repositorios separados**: el backend (Spring Boot, ya implementado) y este frontend (React, por implementar). Antes de tocar código, practica levantar ambos y comprueba que se comunican correctamente — esa conexión es, en sí misma, parte del objetivo del lab.
+
+### 2.1 Levanta el backend primero
+
+En una terminal aparte:
 
 ```bash
-# 1. Navega al directorio del proyecto (si aun no lo has hecho)
-cd cs2031-2026-2-week11-lab
+git clone https://github.com/CS2031-DBP/cs2031-2026-2-week11-backend.git
+cd cs2031-2026-2-week11-backend
+./mvnw spring-boot:run
+```
 
-# 2. Instala las dependencias
+Espera a ver `Started LabWeek11BackendApplication` en la consola. El servidor queda en `http://localhost:8080`. **Deja esa terminal abierta** — el backend debe seguir corriendo mientras trabajas en el frontend.
+
+**Verifica que responde** antes de seguir, abriendo en el navegador (o con `curl`):
+
+```
+http://localhost:8080/student
+```
+
+Deberías ver un JSON con 3 estudiantes (Ana, Carlos, Lucía). Si no carga nada, el backend no está corriendo — revisa esa terminal.
+
+### 2.2 Configura y levanta el frontend
+
+En otra terminal:
+
+```bash
+cd cs2031-2026-2-week11-lab
 npm install
 
-# 3. Crea el archivo de variables de entorno
-# Crea el archivo .env.local en la raiz del proyecto con el siguiente contenido:
-VITE_API_URL=http://localhost:8080
+# Crea el archivo .env.local en la raíz con:
+echo "VITE_API_URL=http://localhost:8080" > .env.local
 
-# 4. Inicia el servidor de desarrollo
 npm run dev
 ```
 
-La aplicacion quedara disponible en **http://localhost:5173**.
+La app queda en **http://localhost:5173**.
 
-> **Nota:** El archivo `.env.local` no esta incluido en el repositorio. Debes crearlo manualmente con el contenido indicado arriba.
+> `.env.local` no está en el repo (está en `.gitignore`); créalo tú. Si cambias esta variable, reinicia `npm run dev` — Vite no recarga `.env*` en caliente.
+
+### 2.3 Verifica la conexión
+
+Con ambos corriendo, abre `http://localhost:5173`. Como los componentes de este repo todavía tienen `// TODO` sin resolver, la UI no mostrará la lista de estudiantes todavía — eso es normal. Para confirmar que la conexión en sí funciona (independientemente de tu código), abre las DevTools (`F12`) → pestaña **Network** y revisa:
+
+- Hay una petición a `http://localhost:8080/student` (la dispara `useStudents.ts`, que ya está implementado y corre apenas monta la página).
+- Su respuesta trae el JSON de los 3 estudiantes.
+- No hay errores en la pestaña **Console** (en particular, nada de CORS).
+
+Si esa petición sale con status `200` y el JSON correcto, backend y frontend ya están conectados — el resto del lab es completar los componentes para que esos datos se vean en pantalla.
+
+### 2.4 Problemas comunes
+
+| Síntoma | Causa probable |
+|---|---|
+| `ERR_CONNECTION_REFUSED` en Network | El backend no está corriendo, o escucha en otro puerto. |
+| Error de CORS en consola | Verifica que accedes al frontend por `http://localhost:5173` (no `127.0.0.1:5173`); el backend ya trae `CorsConfig` permitiendo cualquier origen. |
+| La request sale a `undefined/student` | Falta `.env.local`, o la variable no se llama exactamente `VITE_API_URL`. |
+| Cambiaste `.env.local` y no pasa nada | Reinicia `npm run dev` (`Ctrl+C` y vuelve a correrlo). |
 
 ---
 

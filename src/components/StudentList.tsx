@@ -8,16 +8,33 @@ interface Props {
 }
 
 export function StudentList({ students, selectedId, onSelect, onDelete }: Props) {
-  // TODO: Si no hay estudiantes, muestra un mensaje "No hay estudiantes registrados."
+  if (students.length === 0) {
+    return <p className="empty">No hay estudiantes registrados.</p>;
+  }
 
-  // TODO: Renderiza una <ul> con un <li> por cada estudiante.
-  //       Cada item debe:
-  //       - Resaltar si su id === selectedId (añade clase CSS 'selected')
-  //       - Tener un botón para seleccionar el estudiante (llama onSelect)
-  //       - Tener un botón para eliminar el estudiante (llama onDelete)
   return (
-    <ul>
-      {/* TODO: mapea students para renderizar un <li> por cada estudiante */}
+    <ul className="student-list">
+      {students.map(student => (
+        <li
+          key={student.id}
+          className={`student-item${student.id === selectedId ? ' selected' : ''}`}
+        >
+          <button
+            type="button"
+            className="student-name-btn"
+            onClick={() => onSelect(student.id)}
+          >
+            {student.firstname} {student.lastname}
+          </button>
+          <button
+            type="button"
+            className="btn-delete"
+            onClick={() => onDelete(student.id)}
+          >
+            Eliminar
+          </button>
+        </li>
+      ))}
     </ul>
   );
 }

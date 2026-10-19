@@ -11,30 +11,46 @@ export function StudentsPage() {
   const { students, loading, error, removeStudent, pushStudent } = useStudents();
 
   const handleDelete = async (id: number) => {
-    // TODO: Llama removeStudent(id) para eliminar el estudiante.
-    //       Si tenía seleccionado ese estudiante, limpia selectedId.
-    //       Maneja el error con try/catch.
+    try {
+      await removeStudent(id);
+      if (selectedId === id) {
+        setSelectedId(null);
+      }
+    } catch (err) {
+      console.error('Error al eliminar estudiante', err);
+    }
   };
 
   const handleCreated = (student: Student) => {
-    // TODO: Agrega el estudiante creado a la lista usando pushStudent.
-    //       Selecciónalo automáticamente (setSelectedId).
+    pushStudent(student);
+    setSelectedId(student.id);
   };
 
-  // TODO: Muestra un estado de carga si loading es true
-  // TODO: Muestra un error si error no es null
-  // TODO: El header con ThemeToggle ya está renderizado abajo.
-  //       Agrega el resto del layout con:
-  //       - Lista de estudiantes (StudentList) con los props correctos
-  //       - Detalle del estudiante seleccionado (StudentDetail)
-  //       - Formulario de creación (StudentForm) con handleCreated
   return (
     <div className="page">
       <header className="page-header">
-        <h1>Estudiantes</h1>
+        <h1 className="page-title">Estudiantes</h1>
         <ThemeToggle />
       </header>
-      <p>TODO: implementar el layout</p>
+
+      {loading && <p className="empty">Cargando estudiantes...</p>}
+      {error && <p className="error">{error}</p>}
+
+      <div className="page-body">
+        <div className="card">
+          <div className="section-title">Lista de estudiantes</div>
+          <StudentList
+            students={students}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            onDelete={handleDelete}
+          />
+        </div>
+
+        <StudentDetail studentId={selectedId} />
+      </div>
+
+      <StudentForm onCreated={handleCreated} />
     </div>
   );
 }
